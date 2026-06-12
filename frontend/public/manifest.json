@@ -1,0 +1,22 @@
+{
+  "name": "SLHRM",
+  "short_name": "SLHRM",
+  "description": "Custom HR Mobile App - Employee Self Service",
+  "start_url": "/hrms/home",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/assets/custom_hrms_pwa/images/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/custom_hrms_pwa/images/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
