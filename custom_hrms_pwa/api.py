@@ -11,10 +11,7 @@ def boot_session(bootinfo):
     defaults = frappe.defaults.get_defaults()
     company = defaults.get("company")
     if company:
-        # Prefer PWA Logo, fallback to company_logo
-        pwa_logo = frappe.db.get_value("Company", company, "pwa_logo")
-        company_logo = frappe.db.get_value("Company", company, "company_logo")
-        logo = pwa_logo or company_logo
+        logo = frappe.db.get_value("Company", company, "company_logo")
         if logo:
             if logo.startswith("http"):
                 bootinfo.company_logo_url = logo
@@ -202,17 +199,28 @@ def get_supervised_employees(user):
 
 @frappe.whitelist()
 def get_company_logo():
-    """Get company logo for PWA branding."""
+    """Get company logo for PWA branding. Uses SLHRM Settings PWA Logo, fallback to Company logo."""
+    # Try PWA Logo from SLHRM Settings first
+    try:
+        pwa_logo = frappe.db.get_single_value("SLHRM Settings", "pwa_logo")
+        if pwa_logo:
+            if pwa_logo.startswith("http"):
+                return {"logo_url": pwa_logo, "company_name": frappe.defaults.get_defaults().get("company")}
+            elif pwa_logo.startswith("/files/"):
+                logo_url = pwa_logo
+            else:
+                logo_url = f"/files/{pwa_logo}"
+            return {"logo_url": logo_url, "company_name": frappe.defaults.get_defaults().get("company")}
+    except Exception:
+        pass
+
+    # Fallback to Company logo
     defaults = frappe.defaults.get_defaults()
     company = defaults.get("company")
     if not company:
         return {"logo_url": None, "company_name": None}
 
-    # Prefer PWA Logo, fallback to company_logo
-    pwa_logo = frappe.db.get_value("Company", company, "pwa_logo")
-    company_logo = frappe.db.get_value("Company", company, "company_logo")
-    logo = pwa_logo or company_logo
-
+    logo = frappe.db.get_value("Company", company, "company_logo")
     logo_url = None
     if logo:
         if logo.startswith("http"):
