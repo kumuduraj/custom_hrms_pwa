@@ -11,7 +11,10 @@ def boot_session(bootinfo):
     defaults = frappe.defaults.get_defaults()
     company = defaults.get("company")
     if company:
-        logo = frappe.db.get_value("Company", company, "company_logo")
+        # Prefer PWA Logo, fallback to company_logo
+        pwa_logo = frappe.db.get_value("Company", company, "pwa_logo")
+        company_logo = frappe.db.get_value("Company", company, "company_logo")
+        logo = pwa_logo or company_logo
         if logo:
             if logo.startswith("http"):
                 bootinfo.company_logo_url = logo
@@ -205,7 +208,11 @@ def get_company_logo():
     if not company:
         return {"logo_url": None, "company_name": None}
 
-    logo = frappe.db.get_value("Company", company, "company_logo")
+    # Prefer PWA Logo, fallback to company_logo
+    pwa_logo = frappe.db.get_value("Company", company, "pwa_logo")
+    company_logo = frappe.db.get_value("Company", company, "company_logo")
+    logo = pwa_logo or company_logo
+
     logo_url = None
     if logo:
         if logo.startswith("http"):
