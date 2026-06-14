@@ -66,7 +66,7 @@ def create_custom_fields():
                 "default": field_def.get("default"),
                 "insert_after": field_def.get("insert_after"),
                 "description": field_def.get("description"),
-                "module": "Custom HRMS PWA",
+                "module": "SLHRM",
             }
         )
         cf.insert(ignore_permissions=True)

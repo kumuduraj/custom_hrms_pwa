@@ -18,11 +18,11 @@ after_uninstall = "custom_hrms_pwa.install.after_uninstall"
 fixtures = [
     {
         "dt": "Custom Field",
-        "filters": [["module", "=", "Custom HRMS PWA"]],
+        "filters": [["module", "=", "SLHRM"]],
     },
     {
         "dt": "Property Setter",
-        "filters": [["module", "=", "Custom HRMS PWA"]],
+        "filters": [["module", "=", "SLHRM"]],
     },
 ]
 

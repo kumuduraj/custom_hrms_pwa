@@ -1,6 +1,6 @@
 {
  "name": "SLHRM Settings",
- "module": "Custom HRMS PWA",
+ "module": "SLHRM",
  "doctype": "DocType",
  "document_type": "Document",
  "issingle": 1,
