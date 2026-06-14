@@ -80,21 +80,25 @@ def create_workspace():
             {"label": "Department", "link_to": "Department", "link_type": "DocType", "icon": "list"},
             {"label": "Branch", "link_to": "Branch", "link_type": "DocType", "icon": "git-branch"},
             {"label": "Grade", "link_to": "Employee Grade", "link_type": "DocType", "icon": "award"},
+            {"label": "Holiday List", "link_to": "Holiday List", "link_type": "DocType", "icon": "calendar"},
 
             # ── Attendance ────────────────────────────────────
             {"label": "Employee Checkin", "link_to": "Employee Checkin", "link_type": "DocType", "icon": "clipboard"},
             {"label": "Attendance", "link_to": "Attendance", "link_type": "DocType", "icon": "check-circle"},
             {"label": "Attendance Request", "link_to": "Attendance Request", "link_type": "DocType", "icon": "clock"},
+            {"label": "Shift Type", "link_to": "Shift Type", "link_type": "DocType", "icon": "calendar"},
             {"label": "Shift Assignment", "link_to": "Shift Assignment", "link_type": "DocType", "icon": "repeat"},
             {"label": "Shift Request", "link_to": "Shift Request", "link_type": "DocType", "icon": "send"},
-            {"label": "Shift Type", "link_to": "Shift Type", "link_type": "DocType", "icon": "calendar"},
 
             # ── Leave ─────────────────────────────────────────
+            {"label": "Leave Type", "link_to": "Leave Type", "link_type": "DocType", "icon": "tag"},
             {"label": "Leave Application", "link_to": "Leave Application", "link_type": "DocType", "icon": "calendar"},
             {"label": "Leave Allocation", "link_to": "Leave Allocation", "link_type": "DocType", "icon": "package"},
             {"label": "Leave Policy", "link_to": "Leave Policy", "link_type": "DocType", "icon": "book"},
             {"label": "Leave Policy Assignment", "link_to": "Leave Policy Assignment", "link_type": "DocType", "icon": "book-open"},
             {"label": "Leave Encashment", "link_to": "Leave Encashment", "link_type": "DocType", "icon": "dollar-sign"},
+            {"label": "Leave Block List", "link_to": "Leave Block List", "link_type": "DocType", "icon": "x-circle"},
+            {"label": "Leave Control Panel", "link_to": "Leave Control Panel", "link_type": "DocType", "icon": "settings"},
             {"label": "Compensatory Leave Request", "link_to": "Compensatory Leave Request", "link_type": "DocType", "icon": "gift"},
 
             # ── Expense ───────────────────────────────────────
@@ -105,8 +109,8 @@ def create_workspace():
             # ── Payroll ───────────────────────────────────────
             {"label": "Salary Slip", "link_to": "Salary Slip", "link_type": "DocType", "icon": "file-text"},
             {"label": "Salary Structure", "link_to": "Salary Structure", "link_type": "DocType", "icon": "briefcase"},
+            {"label": "Salary Structure Assignment", "link_to": "Salary Structure Assignment", "link_type": "DocType", "icon": "briefcase"},
             {"label": "Payroll Entry", "link_to": "Payroll Entry", "link_type": "DocType", "icon": "dollar-sign"},
-            {"label": "Employee Benefit", "link_to": "Employee Benefit", "link_type": "DocType", "icon": "heart"},
             {"label": "Gratuity", "link_to": "Gratuity", "link_type": "DocType", "icon": "star"},
 
             # ── Recruitment ───────────────────────────────────
@@ -115,8 +119,9 @@ def create_workspace():
             {"label": "Interview", "link_to": "Interview", "link_type": "DocType", "icon": "message-circle"},
 
             # ── Reports ───────────────────────────────────────
-            {"label": "Monthly Attendance Sheet", "link_to": "Report", "link_type": "Page", "icon": "file"},
-            {"label": "Salary Register", "link_to": "Report", "link_type": "Page", "icon": "file"},
+            {"label": "Monthly Attendance Sheet", "link_to": "Monthly Attendance Sheet", "link_type": "Report", "icon": "file"},
+            {"label": "Employee Leave Balance", "link_to": "Employee Leave Balance Summary", "link_type": "Report", "icon": "file"},
+            {"label": "Leave Ledger", "link_to": "Leave Ledger", "link_type": "Report", "icon": "file"},
         ],
     })
     ws.insert(ignore_permissions=True)
