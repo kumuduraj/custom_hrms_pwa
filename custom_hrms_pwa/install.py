@@ -4,7 +4,6 @@ from frappe import _
 
 def after_install():
     create_custom_fields()
-    create_dashboard()
     create_workspace()
     frappe.db.commit()
     print("SLHRM: Installation complete.")
@@ -56,35 +55,6 @@ def create_custom_fields():
         print(f"  Created Custom Field: {dt}-{fieldname}")
 
 
-def create_dashboard():
-    if frappe.db.exists("Dashboard", "SLHRM"):
-        frappe.delete_doc("Dashboard", "SLHRM")
-
-    dash = frappe.get_doc({
-        "doctype": "Dashboard",
-        "name": "SLHRM",
-        "dashboard_name": "SLHRM",
-        "module": "SLHRM",
-        "is_hidden": 0,
-        "chart": [],
-    })
-
-    # Add number cards
-    dash.append("number_cards", {
-        "number_card": "Total Employees",
-        "label": "Total Employees",
-    })
-
-    # Add charts
-    dash.append("charts", {
-        "chart_name": "Monthly Attendance Sheet",
-        "label": "Attendance Overview",
-    })
-
-    dash.insert(ignore_permissions=True)
-    print("  Created Dashboard: SLHRM")
-
-
 def create_workspace():
     for doctype in ["Workspace Sidebar", "Workspace"]:
         existing = frappe.get_all(doctype, filters={"name": "SLHRM"})
@@ -109,7 +79,7 @@ def create_workspace():
 def _get_workspace_items():
     items = []
 
-    # ── Top-level navigation (not under any section) ──────────
+    # ── Top-level navigation ──────────────────────────────────
     items.append(_top_link("Employee", "Employee", "DocType", "square-user-round"))
 
     # ── Setup Section ─────────────────────────────────────────
@@ -121,77 +91,76 @@ def _get_workspace_items():
     items.append(_child_link("Employee Grade", "DocType", "award"))
     items.append(_child_link("Employee Group", "DocType", "users"))
     items.append(_child_link("Employment Type", "DocType", "briefcase"))
-    items.append(_child_link("Holiday List", "DocType", "calendar"))
+    items.append(_child_link("Holiday List", "DocType", "calendar-heart"))
 
     # ── Attendance Section ────────────────────────────────────
-    items.append(_section("Attendance", icon="clock"))
-    items.append(_child_link("Employee Checkin", "DocType", "clipboard"))
-    items.append(_child_link("Attendance", "DocType", "check-circle"))
-    items.append(_child_link("Attendance Request", "DocType", "send"))
-    items.append(_child_link("Biometric Punch Log", "DocType", "fingerprint"))
-    items.append(_child_link("Attendance Marker", "DocType", "check-square"))
-    items.append(_child_link("Shift Type", "DocType", "calendar"))
-    items.append(_child_link("Shift Assignment", "DocType", "repeat"))
-    items.append(_child_link("Shift Request", "DocType", "arrow-up"))
+    items.append(_section("Attendance", icon="calendar-check"))
+    items.append(_child_link("Employee Checkin", "DocType", "clipboard-check"))
+    items.append(_child_link("Attendance", "DocType", "calendar-check"))
+    items.append(_child_link("Attendance Request", "DocType", "bell-dot"))
+    items.append(_child_link("Biometric Punch Log", "DocType", "notepad-text"))
+    items.append(_child_link("Attendance Marker", "DocType", "clipboard-pen"))
+    items.append(_child_link("Shift Type", "DocType", "calendar-clock"))
+    items.append(_child_link("Shift Assignment", "DocType", "calendar-range"))
+    items.append(_child_link("Shift Request", "DocType", "pointer"))
 
     # ── Leave Section ─────────────────────────────────────────
-    items.append(_section("Leave", icon="book"))
+    items.append(_section("Leave", icon="clipboard-pen"))
     items.append(_child_link("Leave Type", "DocType", "tag"))
-    items.append(_child_link("Leave Application", "DocType", "file-text"))
-    items.append(_child_link("Leave Allocation", "DocType", "package"))
+    items.append(_child_link("Leave Application", "DocType", "notepad-text"))
+    items.append(_child_link("Leave Allocation", "DocType", "list-todo"))
     items.append(_child_link("Leave Policy", "DocType", "shield"))
     items.append(_child_link("Leave Policy Assignment", "DocType", "shield"))
-    items.append(_child_link("Leave Encashment", "DocType", "dollar-sign"))
-    items.append(_child_link("Leave Block List", "DocType", "x-circle"))
+    items.append(_child_link("Leave Encashment", "DocType", "money-coins-1"))
+    items.append(_child_link("Leave Block List", "DocType", "badge-alert"))
     items.append(_child_link("Compensatory Leave Request", "DocType", "gift"))
 
     # ── Expense Section ───────────────────────────────────────
-    items.append(_section("Expense", icon="credit-card"))
-    items.append(_child_link("Expense Claim", "DocType", "credit-card"))
+    items.append(_section("Expense", icon="money-coins-1"))
+    items.append(_child_link("Expense Claim", "DocType", "upload"))
     items.append(_child_link("Expense Claim Type", "DocType", "layers"))
-    items.append(_child_link("Employee Advance", "DocType", "bank"))
+    items.append(_child_link("Employee Advance", "DocType", "arrow-down-from-line"))
 
     # ── Payroll Section ───────────────────────────────────────
-    items.append(_section("Payroll", icon="dollar-sign"))
-    items.append(_child_link("Salary Slip", "DocType", "file-text"))
-    items.append(_child_link("Salary Structure", "DocType", "briefcase"))
-    items.append(_child_link("Salary Structure Assignment", "DocType", "briefcase"))
-    items.append(_child_link("Payroll Entry", "DocType", "check-circle"))
-    items.append(_child_link("Gratuity", "DocType", "star"))
+    items.append(_section("Payroll", icon="accounting"))
+    items.append(_child_link("Salary Slip", "DocType", "banknote-arrow-up"))
+    items.append(_child_link("Salary Structure", "DocType", "loan"))
+    items.append(_child_link("Salary Structure Assignment", "DocType", "accounting"))
+    items.append(_child_link("Payroll Entry", "DocType", "piggy-bank"))
+    items.append(_child_link("Gratuity", "DocType", "banknote-x"))
 
     # ── Recruitment Section ───────────────────────────────────
-    items.append(_section("Recruitment", icon="briefcase"))
-    items.append(_child_link("Job Opening", "DocType", "briefcase"))
-    items.append(_child_link("Job Applicant", "DocType", "user-plus"))
-    items.append(_child_link("Interview", "DocType", "message-circle"))
+    items.append(_section("Recruitment", icon="user-round-plus"))
+    items.append(_child_link("Job Opening", "DocType", "videotape"))
+    items.append(_child_link("Job Applicant", "DocType", "circle-user-round"))
+    items.append(_child_link("Interview", "DocType", "user-round-check"))
     items.append(_child_link("Staffing Plan", "DocType", "users"))
 
     # ── Tools Section ─────────────────────────────────────────
     items.append(_section("Tools", icon="tool"))
-    items.append(_child_link("Employee Attendance Tool", "DocType", "clipboard"))
-    items.append(_child_link("Shift Assignment Tool", "DocType", "repeat"))
+    items.append(_child_link("Employee Attendance Tool", "DocType", "calendar-check"))
+    items.append(_child_link("Shift Assignment Tool", "DocType", "calendar-range"))
     items.append(_child_link("Leave Control Panel", "DocType", "settings"))
 
-    # ── Reports Section (LAST) ────────────────────────────────
-    items.append(_section("Reports", icon="file", keep_closed=True))
-    items.append(_child_link("Monthly Attendance Sheet", "Report", "file"))
-    items.append(_child_link("Employee Leave Balance Summary", "Report", "file"))
-    items.append(_child_link("Leave Ledger", "Report", "file"))
-    items.append(_child_link("Employee Advance Summary", "Report", "file"))
-    items.append(_child_link("Unpaid Expense Claim", "Report", "file"))
+    # ── Reports Section ───────────────────────────────────────
+    items.append(_section("Reports", icon="notepad-text", keep_closed=True))
+    items.append(_child_link("Monthly Attendance Sheet", "Report", "notepad-text"))
+    items.append(_child_link("Employee Leave Balance Summary", "Report", "notepad-text"))
+    items.append(_child_link("Leave Ledger", "Report", "notepad-text"))
+    items.append(_child_link("Employee Advance Summary", "Report", "notepad-text"))
+    items.append(_child_link("Unpaid Expense Claim", "Report", "notepad-text"))
 
-    # ── Settings (very last) ──────────────────────────────────
+    # ── Settings Section (LAST) ───────────────────────────────
     items.append(_section("Settings", icon="settings", keep_closed=True))
-    items.append(_child_link("SLHRM Settings", "DocType", "setting"))
-    items.append(_child_link("Custom Attendance Settings", "DocType", "setting"))
-    items.append(_child_link("HR Settings", "DocType", "setting"))
-    items.append(_child_link("Payroll Settings", "DocType", "setting"))
+    items.append(_child_link("SLHRM Settings", "DocType", "settings"))
+    items.append(_child_link("Custom Attendance Settings", "DocType", "settings"))
+    items.append(_child_link("HR Settings", "DocType", "settings"))
+    items.append(_child_link("Payroll Settings", "DocType", "settings"))
 
     return items
 
 
 def _top_link(label, link_to, link_type, icon):
-    """Top-level navigation link (not under any section)."""
     return {
         "type": "Link",
         "link_type": link_type,
@@ -207,7 +176,6 @@ def _top_link(label, link_to, link_type, icon):
 
 
 def _section(label, icon=None, keep_closed=False):
-    """Section Break with collapsible header."""
     return {
         "type": "Section Break",
         "label": label,
@@ -221,7 +189,6 @@ def _section(label, icon=None, keep_closed=False):
 
 
 def _child_link(label, link_type, icon="link"):
-    """Child link under a section."""
     return {
         "type": "Link",
         "link_type": link_type,
