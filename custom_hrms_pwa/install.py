@@ -80,10 +80,11 @@ def _get_workspace_items():
     items = []
 
     # ── Top-level navigation ──────────────────────────────────
-    items.append(_top_link("Employee", "Employee", "DocType", "square-user-round"))
+    items.append(_top_link("Dashboard", "Human Resource", "Dashboard", "layout-dashboard"))
 
     # ── Setup Section ─────────────────────────────────────────
     items.append(_section("Setup", icon="database", keep_closed=True))
+    items.append(_child_link("Employee", "DocType", "square-user-round"))
     items.append(_child_link("Company", "DocType", "building"))
     items.append(_child_link("Branch", "DocType", "git-branch"))
     items.append(_child_link("Department", "DocType", "list"))
