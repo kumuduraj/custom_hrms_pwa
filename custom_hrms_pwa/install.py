@@ -4,6 +4,7 @@ from frappe import _
 
 def after_install():
     create_custom_fields()
+    create_dashboard()
     create_workspace()
     frappe.db.commit()
     print("SLHRM: Installation complete.")
@@ -55,6 +56,35 @@ def create_custom_fields():
         print(f"  Created Custom Field: {dt}-{fieldname}")
 
 
+def create_dashboard():
+    if frappe.db.exists("Dashboard", "SLHRM"):
+        frappe.delete_doc("Dashboard", "SLHRM")
+
+    dash = frappe.get_doc({
+        "doctype": "Dashboard",
+        "name": "SLHRM",
+        "dashboard_name": "SLHRM",
+        "module": "SLHRM",
+        "is_hidden": 0,
+        "chart": [],
+    })
+
+    # Add number cards
+    dash.append("number_cards", {
+        "number_card": "Total Employees",
+        "label": "Total Employees",
+    })
+
+    # Add charts
+    dash.append("charts", {
+        "chart_name": "Monthly Attendance Sheet",
+        "label": "Attendance Overview",
+    })
+
+    dash.insert(ignore_permissions=True)
+    print("  Created Dashboard: SLHRM")
+
+
 def create_workspace():
     for doctype in ["Workspace Sidebar", "Workspace"]:
         existing = frappe.get_all(doctype, filters={"name": "SLHRM"})
@@ -98,6 +128,8 @@ def _get_workspace_items():
     items.append(_child_link("Employee Checkin", "DocType", "clipboard"))
     items.append(_child_link("Attendance", "DocType", "check-circle"))
     items.append(_child_link("Attendance Request", "DocType", "send"))
+    items.append(_child_link("Biometric Punch Log", "DocType", "fingerprint"))
+    items.append(_child_link("Attendance Marker", "DocType", "check-square"))
     items.append(_child_link("Shift Type", "DocType", "calendar"))
     items.append(_child_link("Shift Assignment", "DocType", "repeat"))
     items.append(_child_link("Shift Request", "DocType", "arrow-up"))
@@ -151,6 +183,7 @@ def _get_workspace_items():
     # ── Settings (very last) ──────────────────────────────────
     items.append(_section("Settings", icon="settings", keep_closed=True))
     items.append(_child_link("SLHRM Settings", "DocType", "setting"))
+    items.append(_child_link("Custom Attendance Settings", "DocType", "setting"))
     items.append(_child_link("HR Settings", "DocType", "setting"))
     items.append(_child_link("Payroll Settings", "DocType", "setting"))
 
