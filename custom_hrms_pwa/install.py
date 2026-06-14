@@ -70,59 +70,98 @@ def create_workspace():
         "header_icon": "hr",
         "app": "custom_hrms_pwa",
         "public": 1,
-        "items": [
-            # ── Settings ──────────────────────────────────────
-            {"label": "SLHRM Settings", "link_to": "SLHRM Settings", "link_type": "DocType", "icon": "setting"},
-
-            # ── Employee ──────────────────────────────────────
-            {"label": "Employee", "link_to": "Employee", "link_type": "DocType", "icon": "users"},
-            {"label": "Designation", "link_to": "Designation", "link_type": "DocType", "icon": "tag"},
-            {"label": "Department", "link_to": "Department", "link_type": "DocType", "icon": "list"},
-            {"label": "Branch", "link_to": "Branch", "link_type": "DocType", "icon": "git-branch"},
-            {"label": "Grade", "link_to": "Employee Grade", "link_type": "DocType", "icon": "award"},
-            {"label": "Holiday List", "link_to": "Holiday List", "link_type": "DocType", "icon": "calendar"},
-
-            # ── Attendance ────────────────────────────────────
-            {"label": "Employee Checkin", "link_to": "Employee Checkin", "link_type": "DocType", "icon": "clipboard"},
-            {"label": "Attendance", "link_to": "Attendance", "link_type": "DocType", "icon": "check-circle"},
-            {"label": "Attendance Request", "link_to": "Attendance Request", "link_type": "DocType", "icon": "clock"},
-            {"label": "Shift Type", "link_to": "Shift Type", "link_type": "DocType", "icon": "calendar"},
-            {"label": "Shift Assignment", "link_to": "Shift Assignment", "link_type": "DocType", "icon": "repeat"},
-            {"label": "Shift Request", "link_to": "Shift Request", "link_type": "DocType", "icon": "send"},
-
-            # ── Leave ─────────────────────────────────────────
-            {"label": "Leave Type", "link_to": "Leave Type", "link_type": "DocType", "icon": "tag"},
-            {"label": "Leave Application", "link_to": "Leave Application", "link_type": "DocType", "icon": "calendar"},
-            {"label": "Leave Allocation", "link_to": "Leave Allocation", "link_type": "DocType", "icon": "package"},
-            {"label": "Leave Policy", "link_to": "Leave Policy", "link_type": "DocType", "icon": "book"},
-            {"label": "Leave Policy Assignment", "link_to": "Leave Policy Assignment", "link_type": "DocType", "icon": "book-open"},
-            {"label": "Leave Encashment", "link_to": "Leave Encashment", "link_type": "DocType", "icon": "dollar-sign"},
-            {"label": "Leave Block List", "link_to": "Leave Block List", "link_type": "DocType", "icon": "x-circle"},
-            {"label": "Leave Control Panel", "link_to": "Leave Control Panel", "link_type": "DocType", "icon": "settings"},
-            {"label": "Compensatory Leave Request", "link_to": "Compensatory Leave Request", "link_type": "DocType", "icon": "gift"},
-
-            # ── Expense ───────────────────────────────────────
-            {"label": "Expense Claim", "link_to": "Expense Claim", "link_type": "DocType", "icon": "credit-card"},
-            {"label": "Expense Claim Type", "link_to": "Expense Claim Type", "link_type": "DocType", "icon": "layers"},
-            {"label": "Employee Advance", "link_to": "Employee Advance", "link_type": "DocType", "icon": "bank"},
-
-            # ── Payroll ───────────────────────────────────────
-            {"label": "Salary Slip", "link_to": "Salary Slip", "link_type": "DocType", "icon": "file-text"},
-            {"label": "Salary Structure", "link_to": "Salary Structure", "link_type": "DocType", "icon": "briefcase"},
-            {"label": "Salary Structure Assignment", "link_to": "Salary Structure Assignment", "link_type": "DocType", "icon": "briefcase"},
-            {"label": "Payroll Entry", "link_to": "Payroll Entry", "link_type": "DocType", "icon": "dollar-sign"},
-            {"label": "Gratuity", "link_to": "Gratuity", "link_type": "DocType", "icon": "star"},
-
-            # ── Recruitment ───────────────────────────────────
-            {"label": "Job Opening", "link_to": "Job Opening", "link_type": "DocType", "icon": "briefcase"},
-            {"label": "Job Applicant", "link_to": "Job Applicant", "link_type": "DocType", "icon": "user-plus"},
-            {"label": "Interview", "link_to": "Interview", "link_type": "DocType", "icon": "message-circle"},
-
-            # ── Reports ───────────────────────────────────────
-            {"label": "Monthly Attendance Sheet", "link_to": "Monthly Attendance Sheet", "link_type": "Report", "icon": "file"},
-            {"label": "Employee Leave Balance", "link_to": "Employee Leave Balance Summary", "link_type": "Report", "icon": "file"},
-            {"label": "Leave Ledger", "link_to": "Leave Ledger", "link_type": "Report", "icon": "file"},
-        ],
+        "items": _get_workspace_items(),
     })
     ws.insert(ignore_permissions=True)
     print("  Created Workspace: SLHRM")
+
+
+def _get_workspace_items():
+    """Build workspace items with proper Section Break + child Links."""
+    items = []
+
+    # ── Settings ──────────────────────────────────────────────
+    items.append(_section("Settings", collapsible=False))
+    items.append(_link("SLHRM Settings", "DocType", "setting"))
+
+    # ── Employee ──────────────────────────────────────────────
+    items.append(_section("Employee", icon="users"))
+    items.append(_link("Employee", "DocType", "user"))
+    items.append(_link("Designation", "DocType", "tag"))
+    items.append(_link("Department", "DocType", "list"))
+    items.append(_link("Branch", "DocType", "git-branch"))
+    items.append(_link("Employee Grade", "DocType", "award"))
+    items.append(_link("Holiday List", "DocType", "calendar"))
+
+    # ── Attendance ────────────────────────────────────────────
+    items.append(_section("Attendance", icon="clock"))
+    items.append(_link("Employee Checkin", "DocType", "clipboard"))
+    items.append(_link("Attendance", "DocType", "check-circle"))
+    items.append(_link("Attendance Request", "DocType", "send"))
+    items.append(_link("Shift Type", "DocType", "calendar"))
+    items.append(_link("Shift Assignment", "DocType", "repeat"))
+    items.append(_link("Shift Request", "DocType", "arrow-up"))
+
+    # ── Leave ─────────────────────────────────────────────────
+    items.append(_section("Leave", icon="book"))
+    items.append(_link("Leave Type", "DocType", "tag"))
+    items.append(_link("Leave Application", "DocType", "file-text"))
+    items.append(_link("Leave Allocation", "DocType", "package"))
+    items.append(_link("Leave Policy", "DocType", "shield"))
+    items.append(_link("Leave Policy Assignment", "DocType", "shield"))
+    items.append(_link("Leave Encashment", "DocType", "dollar-sign"))
+    items.append(_link("Leave Block List", "DocType", "x-circle"))
+    items.append(_link("Leave Control Panel", "DocType", "settings"))
+    items.append(_link("Compensatory Leave Request", "DocType", "gift"))
+
+    # ── Expense ───────────────────────────────────────────────
+    items.append(_section("Expense", icon="credit-card"))
+    items.append(_link("Expense Claim", "DocType", "credit-card"))
+    items.append(_link("Expense Claim Type", "DocType", "layers"))
+    items.append(_link("Employee Advance", "DocType", "bank"))
+
+    # ── Payroll ───────────────────────────────────────────────
+    items.append(_section("Payroll", icon="dollar-sign"))
+    items.append(_link("Salary Slip", "DocType", "file-text"))
+    items.append(_link("Salary Structure", "DocType", "briefcase"))
+    items.append(_link("Salary Structure Assignment", "DocType", "briefcase"))
+    items.append(_link("Payroll Entry", "DocType", "check-circle"))
+    items.append(_link("Gratuity", "DocType", "star"))
+
+    # ── Recruitment ───────────────────────────────────────────
+    items.append(_section("Recruitment", icon="briefcase"))
+    items.append(_link("Job Opening", "DocType", "briefcase"))
+    items.append(_link("Job Applicant", "DocType", "user-plus"))
+    items.append(_link("Interview", "DocType", "message-circle"))
+
+    # ── Reports ───────────────────────────────────────────────
+    items.append(_section("Reports", icon="file"))
+    items.append(_link("Monthly Attendance Sheet", "Report", "file"))
+    items.append(_link("Employee Leave Balance Summary", "Report", "file"))
+    items.append(_link("Leave Ledger", "Report", "file"))
+
+    return items
+
+
+def _section(label, icon=None, collapsible=True):
+    """Create a Section Break item (collapsible heading)."""
+    item = {
+        "type": "Section Break",
+        "label": label,
+        "collapsible": 1 if collapsible else 0,
+    }
+    if icon:
+        item["icon"] = icon
+    return item
+
+
+def _link(label, link_type, icon="link"):
+    """Create a Link item under the current section."""
+    return {
+        "type": "Link",
+        "link_type": link_type,
+        "link_to": label,
+        "label": label,
+        "icon": icon,
+        "child": 1,
+    }
