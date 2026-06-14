@@ -80,7 +80,6 @@ def _get_workspace_items():
     items = []
 
     # ── Top-level navigation (not under any section) ──────────
-    items.append(_top_link("Dashboard", "SLHRM", "Dashboard", "layout-dashboard"))
     items.append(_top_link("Employee", "Employee", "DocType", "square-user-round"))
 
     # ── Setup Section ─────────────────────────────────────────
