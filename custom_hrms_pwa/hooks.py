@@ -12,6 +12,7 @@ app_logo_url = "/assets/custom_hrms_pwa/images/logo-192.png"
 
 # Installation
 after_install = "custom_hrms_pwa.install.after_install"
+after_uninstall = "custom_hrms_pwa.install.after_uninstall"
 
 # Fixtures - export custom fields and property setters
 fixtures = [
