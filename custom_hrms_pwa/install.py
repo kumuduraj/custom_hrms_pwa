@@ -56,11 +56,11 @@ def create_custom_fields():
 
 
 def create_workspace():
-    if frappe.db.exists("Workspace Sidebar", {"name": "SLHRM", "app": "custom_hrms_pwa"}):
-        # Fix header_icon if missing
-        frappe.db.set_value("Workspace Sidebar", "SLHRM", "header_icon", "hr")
-        print("  Workspace SLHRM already exists (fixed header_icon)")
-        return
+    # Delete any existing SLHRM workspace
+    for doctype in ["Workspace Sidebar", "Workspace"]:
+        existing = frappe.get_all(doctype, filters={"name": "SLHRM"})
+        for doc in existing:
+            frappe.delete_doc(doctype, doc.name, ignore_permissions=True)
 
     ws = frappe.get_doc({
         "doctype": "Workspace Sidebar",
@@ -71,12 +71,52 @@ def create_workspace():
         "app": "custom_hrms_pwa",
         "public": 1,
         "items": [
+            # ── Settings ──────────────────────────────────────
             {"label": "SLHRM Settings", "link_to": "SLHRM Settings", "link_type": "DocType", "icon": "setting"},
+
+            # ── Employee ──────────────────────────────────────
             {"label": "Employee", "link_to": "Employee", "link_type": "DocType", "icon": "users"},
+            {"label": "Designation", "link_to": "Designation", "link_type": "DocType", "icon": "tag"},
+            {"label": "Department", "link_to": "Department", "link_type": "DocType", "icon": "list"},
+            {"label": "Branch", "link_to": "Branch", "link_type": "DocType", "icon": "git-branch"},
+            {"label": "Grade", "link_to": "Employee Grade", "link_type": "DocType", "icon": "award"},
+
+            # ── Attendance ────────────────────────────────────
             {"label": "Employee Checkin", "link_to": "Employee Checkin", "link_type": "DocType", "icon": "clipboard"},
+            {"label": "Attendance", "link_to": "Attendance", "link_type": "DocType", "icon": "check-circle"},
+            {"label": "Attendance Request", "link_to": "Attendance Request", "link_type": "DocType", "icon": "clock"},
+            {"label": "Shift Assignment", "link_to": "Shift Assignment", "link_type": "DocType", "icon": "repeat"},
+            {"label": "Shift Request", "link_to": "Shift Request", "link_type": "DocType", "icon": "send"},
+            {"label": "Shift Type", "link_to": "Shift Type", "link_type": "DocType", "icon": "calendar"},
+
+            # ── Leave ─────────────────────────────────────────
             {"label": "Leave Application", "link_to": "Leave Application", "link_type": "DocType", "icon": "calendar"},
+            {"label": "Leave Allocation", "link_to": "Leave Allocation", "link_type": "DocType", "icon": "package"},
+            {"label": "Leave Policy", "link_to": "Leave Policy", "link_type": "DocType", "icon": "book"},
+            {"label": "Leave Policy Assignment", "link_to": "Leave Policy Assignment", "link_type": "DocType", "icon": "book-open"},
+            {"label": "Leave Encashment", "link_to": "Leave Encashment", "link_type": "DocType", "icon": "dollar-sign"},
+            {"label": "Compensatory Leave Request", "link_to": "Compensatory Leave Request", "link_type": "DocType", "icon": "gift"},
+
+            # ── Expense ───────────────────────────────────────
             {"label": "Expense Claim", "link_to": "Expense Claim", "link_type": "DocType", "icon": "credit-card"},
-            {"label": "Salary Slip", "link_to": "Salary Slip", "link_type": "DocType", "icon": "money"},
+            {"label": "Expense Claim Type", "link_to": "Expense Claim Type", "link_type": "DocType", "icon": "layers"},
+            {"label": "Employee Advance", "link_to": "Employee Advance", "link_type": "DocType", "icon": "bank"},
+
+            # ── Payroll ───────────────────────────────────────
+            {"label": "Salary Slip", "link_to": "Salary Slip", "link_type": "DocType", "icon": "file-text"},
+            {"label": "Salary Structure", "link_to": "Salary Structure", "link_type": "DocType", "icon": "briefcase"},
+            {"label": "Payroll Entry", "link_to": "Payroll Entry", "link_type": "DocType", "icon": "dollar-sign"},
+            {"label": "Employee Benefit", "link_to": "Employee Benefit", "link_type": "DocType", "icon": "heart"},
+            {"label": "Gratuity", "link_to": "Gratuity", "link_type": "DocType", "icon": "star"},
+
+            # ── Recruitment ───────────────────────────────────
+            {"label": "Job Opening", "link_to": "Job Opening", "link_type": "DocType", "icon": "briefcase"},
+            {"label": "Job Applicant", "link_to": "Job Applicant", "link_type": "DocType", "icon": "user-plus"},
+            {"label": "Interview", "link_to": "Interview", "link_type": "DocType", "icon": "message-circle"},
+
+            # ── Reports ───────────────────────────────────────
+            {"label": "Monthly Attendance Sheet", "link_to": "Report", "link_type": "Page", "icon": "file"},
+            {"label": "Salary Register", "link_to": "Report", "link_type": "Page", "icon": "file"},
         ],
     })
     ws.insert(ignore_permissions=True)
