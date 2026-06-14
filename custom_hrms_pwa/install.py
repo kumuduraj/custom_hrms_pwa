@@ -77,12 +77,7 @@ def create_workspace():
 
 
 def _get_workspace_items():
-    """Build workspace items with proper Section Break + child Links."""
     items = []
-
-    # ── Settings ──────────────────────────────────────────────
-    items.append(_section("Settings", collapsible=False))
-    items.append(_link("SLHRM Settings", "DocType", "setting"))
 
     # ── Employee ──────────────────────────────────────────────
     items.append(_section("Employee", icon="users"))
@@ -91,6 +86,8 @@ def _get_workspace_items():
     items.append(_link("Department", "DocType", "list"))
     items.append(_link("Branch", "DocType", "git-branch"))
     items.append(_link("Employee Grade", "DocType", "award"))
+    items.append(_link("Employee Group", "DocType", "users"))
+    items.append(_link("Employment Type", "DocType", "briefcase"))
     items.append(_link("Holiday List", "DocType", "calendar"))
 
     # ── Attendance ────────────────────────────────────────────
@@ -111,7 +108,6 @@ def _get_workspace_items():
     items.append(_link("Leave Policy Assignment", "DocType", "shield"))
     items.append(_link("Leave Encashment", "DocType", "dollar-sign"))
     items.append(_link("Leave Block List", "DocType", "x-circle"))
-    items.append(_link("Leave Control Panel", "DocType", "settings"))
     items.append(_link("Compensatory Leave Request", "DocType", "gift"))
 
     # ── Expense ───────────────────────────────────────────────
@@ -133,22 +129,37 @@ def _get_workspace_items():
     items.append(_link("Job Opening", "DocType", "briefcase"))
     items.append(_link("Job Applicant", "DocType", "user-plus"))
     items.append(_link("Interview", "DocType", "message-circle"))
+    items.append(_link("Staffing Plan", "DocType", "users"))
+
+    # ── Tools ─────────────────────────────────────────────────
+    items.append(_section("Tools", icon="tool"))
+    items.append(_link("Employee Attendance Tool", "DocType", "clipboard"))
+    items.append(_link("Shift Assignment Tool", "DocType", "repeat"))
+    items.append(_link("Leave Control Panel", "DocType", "settings"))
 
     # ── Reports ───────────────────────────────────────────────
     items.append(_section("Reports", icon="file"))
     items.append(_link("Monthly Attendance Sheet", "Report", "file"))
     items.append(_link("Employee Leave Balance Summary", "Report", "file"))
     items.append(_link("Leave Ledger", "Report", "file"))
+    items.append(_link("Employee Advance Summary", "Report", "file"))
+    items.append(_link("Unpaid Expense Claim", "Report", "file"))
+
+    # ── Settings (LAST) ──────────────────────────────────────
+    items.append(_section("Settings", icon="setting", keep_closed=True))
+    items.append(_link("SLHRM Settings", "DocType", "setting"))
+    items.append(_link("HR Settings", "DocType", "setting"))
+    items.append(_link("Payroll Settings", "DocType", "setting"))
 
     return items
 
 
-def _section(label, icon=None, collapsible=True):
-    """Create a Section Break item (collapsible heading)."""
+def _section(label, icon=None, keep_closed=False):
     item = {
         "type": "Section Break",
         "label": label,
-        "collapsible": 1 if collapsible else 0,
+        "collapsible": 1,
+        "keep_closed": 1 if keep_closed else 0,
     }
     if icon:
         item["icon"] = icon
@@ -156,7 +167,6 @@ def _section(label, icon=None, collapsible=True):
 
 
 def _link(label, link_type, icon="link"):
-    """Create a Link item under the current section."""
     return {
         "type": "Link",
         "link_type": link_type,
