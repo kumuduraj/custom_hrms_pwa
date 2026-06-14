@@ -1,0 +1,91 @@
+{
+ "app": "custom_hrms_pwa",
+ "creation": "2026-01-01 00:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "header_icon": "clock",
+ "idx": 0,
+ "items": [
+  {
+   "child": 0,
+   "collapsible": 0,
+   "icon": "setting",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "SLHRM Settings",
+   "link_to": "SLHRM Settings",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 0,
+   "icon": "users",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Employee",
+   "link_to": "Employee",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 0,
+   "icon": "clipboard",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Employee Checkin",
+   "link_to": "Employee Checkin",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 0,
+   "icon": "calendar",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Leave Application",
+   "link_to": "Leave Application",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 0,
+   "icon": "credit-card",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Expense Claim",
+   "link_to": "Expense Claim",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 0,
+   "icon": "money",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Salary Slip",
+   "link_to": "Salary Slip",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  }
+ ],
+ "label": "SLHRM",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "name": "SLHRM",
+ "owner": "Administrator",
+ "parent_workspace": "",
+ "public": 1,
+ "title": "SLHRM",
+ "type": "Workspace"
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<script>
+(function(){
+  var STALE_KEYS = /currentRoute|activeTab|breadcrumb|sidebarItem|workspaceRoute|hrms_route|lastRoute|selectedWorkspace|navState/i;
+  Object.keys(localStorage).forEach(function(k){
+    if(STALE_KEYS.test(k)){
+      localStorage.removeItem(k);
+      console.log('[slhrms] cleared stale key:', k);
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  var _reg = navigator.serviceWorker.register.bind(navigator.serviceWorker);
+  navigator.serviceWorker.register = function(u, o) {
+    if (String(u).includes('sw.js')) { console.log('[slhrms] SW blocked:', u); return Promise.resolve(); }
+    return _reg(u, o);
+  };
+})();
+</script>
+<script>
+navigator.serviceWorker.getRegistrations().then(function(rs) {
+  rs.forEach(function(r) { r.unregister(); });
+});
+</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover maximum-scale=1.0, user-scalable=no" />
+    <title>SLHRM</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="SLHRM" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <meta name="theme-color" content="#fff" />
+    <link rel="icon" type="image/png" sizes="196x196" href="/assets/hrms/manifest/favicon-196.png" />
+    <link rel="apple-touch-icon" href="/assets/hrms/manifest/apple-icon-180.png" />
+    <link rel="stylesheet" href="/assets/hrms/frontend/main-BtZ9J60m.css" />
+    <script>
+      window.csrf_token = "{{ csrf_token }}"
+      window.site_name = '{{ site_name }}'
+      if (!window.frappe) window.frappe = {}
+      frappe.boot = {{ boot }}
+    </script>
+  </head>
+  <body class="antialiased">
+    <div id="app"></div>
+    <div id="modals"></div>
+    <div id="popovers"></div>
+    <script type="module" src="/assets/hrms/frontend/main-DQ5GLwp1.js"></script>
+  </body>
+</html>

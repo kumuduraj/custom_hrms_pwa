@@ -1,0 +1,20 @@
+[
+ {
+  "dt": "Employee",
+  "fieldname": "allow_mobile_checkin",
+  "fieldtype": "Check",
+  "label": "Allow Mobile Check-in",
+  "default": "1",
+  "insert_after": "column_break_45",
+  "description": "Allow this employee to check in via SLHRM mobile app",
+  "module": "Custom HRMS PWA",
+  "owner": "Administrator",
+  "name": "Employee-allow_mobile_checkin",
+  "idx": 0,
+  "creation": "2026-01-01 00:00:00",
+  "modified": "2026-01-01 00:00:00",
+  "modified_by": "Administrator",
+  "docstatus": 0,
+  "doctype": "Custom Field"
+ }
+]

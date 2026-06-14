@@ -1,0 +1,121 @@
+{
+ "name": "SLHRM Settings",
+ "module": "Custom HRMS PWA",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "issingle": 1,
+ "istable": 0,
+ "editable_grid": 1,
+ "track_changes": 0,
+ "engine": "InnoDB",
+ "fields": [
+  {
+   "fieldname": "pwa_settings_section",
+   "fieldtype": "Section Break",
+   "label": "PWA Settings"
+  },
+  {
+   "fieldname": "pwa_logo",
+   "fieldtype": "Attach Image",
+   "label": "PWA Logo",
+   "description": "Logo displayed in the PWA header"
+  },
+  {
+   "fieldname": "pwa_title",
+   "fieldtype": "Data",
+   "label": "PWA Title",
+   "default": "SLHRM",
+   "description": "Title shown in the browser tab and PWA"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "theme_color",
+   "fieldtype": "Color",
+   "label": "Theme Color",
+   "default": "#3b82f6"
+  },
+  {
+   "fieldname": "gps_settings_section",
+   "fieldtype": "Section Break",
+   "label": "GPS Check-in Settings"
+  },
+  {
+   "fieldname": "enable_gps_checkin",
+   "fieldtype": "Check",
+   "label": "Enable GPS Check-in",
+   "default": "1",
+   "description": "Capture GPS coordinates when employee checks in"
+  },
+  {
+   "fieldname": "gps_accuracy_meters",
+   "fieldtype": "Int",
+   "label": "GPS Accuracy (meters)",
+   "default": "100",
+   "description": "Minimum accuracy required for GPS check-in"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enable_geofencing",
+   "fieldtype": "Check",
+   "label": "Enable Geofencing",
+   "default": "0",
+   "description": "Restrict check-in to specific locations"
+  },
+  {
+   "fieldname": "max_checkin_radius_km",
+   "fieldtype": "Float",
+   "label": "Max Check-in Radius (km)",
+   "default": "5.0",
+   "description": "Maximum distance from office for valid check-in"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Company Location"
+  },
+  {
+   "fieldname": "company_latitude",
+   "fieldtype": "Float",
+   "label": "Company Latitude"
+  },
+  {
+   "fieldname": "company_longitude",
+   "fieldtype": "Float",
+   "label": "Company Longitude"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company_address",
+   "fieldtype": "Small Text",
+   "label": "Company Address"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "HR Manager",
+   "read": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "modified": "2026-01-01 00:00:00",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "docstatus": 0
+}
